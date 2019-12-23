@@ -1,0 +1,17 @@
+{
+  "name": "elastic-query-tracker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "lodash": "^4.17.15",
+    "qs": "^6.9.1",
+    "wreck": "^14.2.0"
+  }
+}
