@@ -16,13 +16,13 @@ let cert;
 if (process.env.KEY_PATH) {
   key = fs.readFileSync(process.env.KEY_PATH);
 } else {
-  key = null; 
+  key = null;
 }
 
 if (process.env.CERT_PATH) {
   cert = fs.readFileSync(process.env.CERT_PATH);
 } else {
-  cert = null; 
+  cert = null;
 }
 
 const PORT = process.env.PORT || 9200;
@@ -50,29 +50,43 @@ async function handleRequest(req, res) {
   };
 
   res.setHeader('Connection', 'close');
-  await parse_request({ context, req, res });
+  await parse_request(context, req);
   if (context.is_search_request !== true) {
-    proxy_request({ context, req, res })
-      .then(process_response)
+    try {
+      await proxy_request(req, res)
+      await process_response(res)
+    }
+    catch (err) {
+      console.log('General error', req.method, req.url, err.message || err.toString(), err.stack);
+      if (err.isBoom) {
+        res.writeHead(err.output.statusCode, err.output.headers)
+        res.end(err.output.message)
+      }
+      else {
+        res.writeHead(500);
+        res.end('General exception: ' + err);
+      }
+    }
   }
   else {
-    start_tracking({ context, req, res })
-      .then(proxy_request)
-      .then(process_response)
-      .then(finish_tracking)
-      .then(send_results)
-      .catch((err) => {
-        console.log('General error', req.method, req.url, err.message || err.toString(), err.stack);
-        if (err.isBoom) {
-          res.writeHead(err.output.statusCode, err.output.headers)
-          res.end(err.output.message)
-        }
-        else {
-          res.writeHead(500);
-          res.end('General exception: ' + err);
-        }
-        return ({ context, req, res, err });
-      })
+    try {
+      await start_tracking(context, req);
+      await proxy_request(req, res);
+      await process_response(res);
+      await finish_tracking(context, res);
+      await send_results(context);
+    }
+    catch (err) {
+      console.log('General error', req.method, req.url, err.message || err.toString(), err.stack);
+      if (err.isBoom) {
+        res.writeHead(err.output.statusCode, err.output.headers)
+        res.end(err.output.message)
+      }
+      else {
+        res.writeHead(500);
+        res.end('General exception: ' + err);
+      }
+    }
   }
 }
 
