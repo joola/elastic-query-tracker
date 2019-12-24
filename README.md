@@ -13,7 +13,7 @@ The proxy intercepts search requests and record them into Elasticsearch for furt
 Elastic query tracker is written in Javascript and executed with NodeJS.
 
 ```
-$ nodejs index.js
+$ node index.js
 ```
 
 The proxy accepts the following environment variables:
