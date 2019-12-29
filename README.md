@@ -6,6 +6,11 @@ The proxy intercepts search requests and record them into Elasticsearch for furt
 
 [img]
 
+## Data schema
+
+
+## Tagging your data
+
 
 
 ## Running Elastic Query Tracker
@@ -22,6 +27,7 @@ The proxy accepts the following environment variables:
 |--------------|-----------------------|
 | PORT         | 9095                  |
 | ELASTIC_HOST | http://localhost:9200 |
+
 
 ### Docker
 
