@@ -69,17 +69,21 @@ function initServer() {
 }
 
 //Let's setup the publisher
-try {
-  initOutputStream();
-}
-catch (ex) {
-  console.error('Failed to init output stream.', ex);
-}
 
-//Let's start listening
-try {
-  initServer();
+async function init() {
+  try {
+    await initOutputStream();
+  }
+  catch (ex) {
+    console.error('Failed to init output stream.', ex);
+  }
+
+  //Let's start listening
+  try {
+    initServer();
+  }
+  catch (ex) {
+    console.error('Failed to start service.', ex)
+  }
 }
-catch (ex) {
-  console.error('Failed to start service.', ex)
-}
+init();
