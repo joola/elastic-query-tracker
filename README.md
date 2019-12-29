@@ -37,6 +37,7 @@ The proxy intercepts search requests and record them into Elasticsearch for furt
   },
   "is_search_request": true,
   "response": {
+    "es_host": "http://localhost:9200"
     "took": 5,
     "timed_out": false,
     "shards": {
