@@ -6,8 +6,6 @@ const Http = require('http');
 const handle_request = require('./lib/handle_request');
 let publisher = null;
 
-console.log(`Starting Elastic Query Tracker v${VERSION} on port ${PORT}`);
-
 async function initOutputStream() {
   const KAFKA_URL = process.env.KAFKA_URL;
   const KAFKA_TOPIC = process.env.KAFKA_TOPIC;
@@ -28,6 +26,8 @@ async function initOutputStream() {
     publisher = require('./lib/send_results_es');
     await publisher.init()
   }
+
+  handle_request.init(publisher);
 }
 
 function initServer() {
@@ -48,7 +48,6 @@ function initServer() {
 
   const PORT = process.env.PORT || 9205;
   const serverOptions = {
-    publisher,
     config: {
       port: PORT
     }
@@ -61,10 +60,11 @@ function initServer() {
   }
   let server;
   if (useSSL) {
-    server = Https.createServer(serverOptions.config, handle_request);
+    server = Https.createServer(serverOptions.config, handle_request.handle);
   } else {
-    server = Http.createServer(handle_request);
+    server = Http.createServer(handle_request.handle);
   }
+  console.log(`Starting Elastic Query Tracker v${VERSION} on port ${PORT}`);
   server.listen(serverOptions.config.port);
 }
 
