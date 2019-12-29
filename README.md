@@ -27,7 +27,7 @@ The proxy intercepts search requests and record them into Elasticsearch for furt
       "x-opaque-id": "123",
       "content-type": "application/json",
       "x-query-tracker-id": "1234",
-      "x-query-tracker-tags": "itay, or"
+      "x-query-tracker-tags": "auth, login"
     },
     "tags": [
       "itay",
