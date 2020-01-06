@@ -12,8 +12,8 @@ The proxy intercepts search requests and record them into Elasticsearch for furt
 {
   "user": {},
   "times": {
-    "start": "2019-12-29T10: 23: 47.085Z",
-    "end": "2019-12-29T10: 23: 47.097Z",
+    "start": "2019-12-29T10: 23:47.085Z",
+    "end": "2019-12-29T10: 23:47.097Z",
     "req_took_ms": 12,
     "elastic_took_ms": 5
   },

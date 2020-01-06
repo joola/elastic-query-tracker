@@ -7,25 +7,8 @@ const handle_request = require('./lib/handle_request');
 let publisher = null;
 
 async function initOutputStream() {
-  const KAFKA_URL = process.env.KAFKA_URL;
-  const KAFKA_TOPIC = process.env.KAFKA_TOPIC;
-
-  const REDIS_HOST = process.env.REDIS_HOST;
-  const REDIS_PORT = process.env.REDIS_PORT || 6379;
-  const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
-
-  if (KAFKA_URL && KAFKA_TOPIC) {
-    publisher = require('./lib/send_results_kafka');
-    await publisher.init(KAFKA_URL, KAFKA_TOPIC)
-  }
-  else if (REDIS_HOST && REDIS_PORT) {
-    publisher = require('./lib/send_results_redis');
-    await publisher.init(REDIS_HOST, REDIS_PORT, REDIS_PASSWORD)
-  }
-  else {
-    publisher = require('./lib/send_results_es');
-    await publisher.init()
-  }
+  publisher = require('./lib/send_results_es');
+  await publisher.init()
 
   handle_request.init(publisher);
 }
