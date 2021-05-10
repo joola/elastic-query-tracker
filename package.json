@@ -8,7 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "boom": "^7.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "qs": "^6.9.1",
     "wreck": "^14.2.0"
   },
