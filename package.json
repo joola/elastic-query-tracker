@@ -9,7 +9,7 @@
   "dependencies": {
     "boom": "^7.3.0",
     "lodash": "^4.17.15",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "wreck": "^14.2.0"
   },
   "publishConfig": {
